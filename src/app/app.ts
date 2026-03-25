@@ -39,6 +39,22 @@ export class App implements OnInit, OnDestroy {
       name: 'Family',
       message: '🤍 Wishing you both a lifetime of happiness and peace.',
     },
+    {
+      name: 'Close Friend',
+      message: '🌹 Congratulations! May your love story be as beautiful as a blooming rose.',
+    },
+    {
+      name: 'Colleague',
+      message: '🎊 Wishing you endless joy and prosperity in your new journey together.',
+    },
+    {
+      name: 'Neighbor',
+      message: '🏡 May your home be filled with love, laughter, and countless happy memories.',
+    },
+    {
+      name: 'Relative',
+      message: '👨‍👩‍👧‍👦 May Allah grant you pious children and a blessed family life.',
+    },
   ];
 
   form = {
