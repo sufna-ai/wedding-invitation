@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "shahul-wedding-invitation": {
+    "wedding-invitation": {
       "projectType": "application",
       "schematics": {},
       "root": "",

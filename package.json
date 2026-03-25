@@ -1,5 +1,5 @@
 {
-  "name": "shahul-wedding-invitation",
+  "name": "wedding-invitation",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:shahul-wedding-invitation": "node dist/shahul-wedding-invitation/server/server.mjs"
+    "serve:ssr:wedding-invitation": "node dist/wedding-invitation/server/server.mjs"
   },
   "private": true,
   "packageManager": "npm@11.11.0",
