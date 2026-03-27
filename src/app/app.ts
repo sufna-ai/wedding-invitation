@@ -6,6 +6,7 @@ import {
   PLATFORM_ID,
   ViewChild,
   ElementRef,
+  ChangeDetectorRef
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -70,18 +71,21 @@ export class App implements OnInit, OnDestroy {
   mapsUrl =
     'https://maps.app.goo.gl/2miyVWtsCXVMi3PfA';
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: object,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-  this.isBrowser = isPlatformBrowser(this.platformId);
-
-  if (this.isBrowser) {
-    this.updateCountdown();
-    this.intervalId = window.setInterval(() => {
+    if (isPlatformBrowser(this.platformId)) {
       this.updateCountdown();
-    }, 1000);
+
+      this.intervalId = setInterval(() => {
+        this.updateCountdown();
+        this.cdr.detectChanges();
+      }, 1000);
+    }
   }
-}
 
 
   ngOnDestroy(): void {
@@ -129,33 +133,31 @@ getExcitement() {
   }
 
   updateCountdown(): void {
-  if (!this.isBrowser) return;
+    const targetDate = new Date(2026, 3, 12, 0, 0, 0).getTime();
+    const now = new Date().getTime();
+    const distance = targetDate - now;
 
-  const targetDate = new Date('2026-04-12T00:00:00+05:30').getTime();
-  const now = Date.now();
-  const diff = targetDate - now;
+    if (distance <= 0) {
+      this.timeLeft = {
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+      };
 
-  if (diff <= 0) {
-    this.timeLeft = {
-      days: 0,
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-    };
-
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
+      if (this.intervalId) {
+        clearInterval(this.intervalId);
+      }
+      return;
     }
-    return;
-  }
 
-  this.timeLeft = {
-    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-    hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-    minutes: Math.floor((diff / (1000 * 60)) % 60),
-    seconds: Math.floor((diff / 1000) % 60),
-  };
-}
+    this.timeLeft = {
+      days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((distance / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((distance / (1000 * 60)) % 60),
+      seconds: Math.floor((distance / 1000) % 60)
+    };
+  }
   submitWish(): void {
     const name = this.form.name.trim();
     const message = this.form.message.trim();
